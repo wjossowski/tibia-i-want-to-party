@@ -1,0 +1,33 @@
+{
+  "name": "i-want-to-party",
+  "version": "1.0.0",
+  "description": "Tibia party seeker",
+  "main": "index.js",
+  "author": "Wojciech Ossowski",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "yarn jest",
+    "build": "yarn webpack",
+    "build:watch": "yarn webpack --watch",
+    "start": "node dist/backend.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/express": "^4.17.2",
+    "@types/jest": "^24.9.0",
+    "@types/node": "^13.1.7",
+    "awesome-typescript-loader": "^5.2.1",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
