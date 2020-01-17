@@ -10,7 +10,9 @@
     "test": "yarn jest",
     "build:backend": "yarn webpack --config ./webpack/build.backend.config.js",
     "build:backend:watch": "yarn webpack --config ./webpack/build.backend.config.js --watch",
-    "start": "node dist/backend.js"
+    "build:client": "(cd client && yarn build)",
+    "bundle": "yarn build:backend && yarn build:client",
+    "start": "node backend_bundle.js"
   },
   "dependencies": {
     "axios": "^0.19.1",
@@ -29,7 +31,7 @@
     "jest": "^24.9.0",
     "ts-jest": "^24.3.0",
     "typescript": "^3.7.5",
-    "webpack": "^4.41.5",
+    "webpack": "4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"
   }

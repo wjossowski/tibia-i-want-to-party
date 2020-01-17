@@ -9,8 +9,8 @@ module.exports = {
     '../backend/src/party/presenters/rest/index.ts',
   ),
   output: {
-    filename: 'backend.js',
-    path: path.resolve(__dirname, '../dist'),
+    filename: 'backend_bundle.js',
+    path: path.resolve(__dirname, '../'),
   },
   mode: 'production',
   optimization: {
@@ -36,4 +36,7 @@ module.exports = {
     plugins: [new TsConfigPathsPlugin()],
   },
   target: 'node',
+  node: {
+    __dirname: false,
+  },
 }

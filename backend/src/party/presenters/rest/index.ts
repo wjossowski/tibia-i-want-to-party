@@ -1,3 +1,4 @@
+import path from 'path'
 import http from 'http'
 import express from 'express'
 import cors from 'cors'
@@ -13,6 +14,8 @@ const app = express()
 app.use(logger)
 app.use(cors())
 
+app.use(express.static(path.join(__dirname, './client/build')))
+
 app.use('/api/v1', apiV1)
 app.use((err, _req, res, _next) => {
   let errorMessage = 'An error occured'
@@ -22,6 +25,10 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({
     error: errorMessage,
   })
+})
+
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'))
 })
 
 app.all('/*', (_req, res) => {
