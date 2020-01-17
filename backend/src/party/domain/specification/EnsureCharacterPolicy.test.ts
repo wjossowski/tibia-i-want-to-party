@@ -27,7 +27,7 @@ describe('EnsureCharacterPolicy', () => {
       const character = new Character({
         world: 'Bona',
         fullVocation: 'Elder Druid',
-        level: 74,
+        level: 65,
         name: 'A Druid',
       })
 
@@ -40,21 +40,8 @@ describe('EnsureCharacterPolicy', () => {
       const character = new Character({
         world: 'Bona',
         fullVocation: 'Elder Druid',
-        level: 126,
+        level: 151,
         name: 'A Druid',
-      })
-
-      expect(
-        new EnsureCharacterPolicy(mainCharacter).isSatisfiedBy(character),
-      ).toEqual(false)
-    })
-
-    it('Should not pass policy for the same vocation', () => {
-      const character = new Character({
-        world: 'Bona',
-        fullVocation: 'Knight',
-        level: 100,
-        name: 'Invalid Knight',
       })
 
       expect(

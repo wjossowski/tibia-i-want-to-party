@@ -4,14 +4,17 @@ const { TsConfigPathsPlugin } = require('awesome-typescript-loader')
 
 module.exports = {
   externals: [nodeExternals()],
-  entry: path.resolve(__dirname, './src/party/presenters/rest/index.ts'),
+  entry: path.resolve(
+    __dirname,
+    '../backend/src/party/presenters/rest/index.ts',
+  ),
   output: {
     filename: 'backend.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
   },
   mode: 'production',
   optimization: {
-    minimize: false,
+    minimize: true,
   },
   module: {
     rules: [

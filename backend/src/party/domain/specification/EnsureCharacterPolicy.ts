@@ -20,22 +20,14 @@ export class EnsureCharacterPolicy {
       }
     }
 
-    if (this.isSameVocation(character)) {
-      return false
-    }
-
     return true
   }
 
   private fitsInLevelRange(character: Character) {
     return (
-      character.level >= this.mainCharacter.level * 0.75 &&
-      character.level <= this.mainCharacter.level * 1.25
+      character.level >= this.mainCharacter.level * 0.66 &&
+      character.level <= this.mainCharacter.level * 1.5
     )
-  }
-
-  private isSameVocation(character: Character) {
-    return this.mainCharacter.vocation === character.vocation
   }
 
   private isTheSameCharacter(character: Character) {

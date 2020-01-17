@@ -1,6 +1,6 @@
 export type Vocation = 'knight' | 'druid' | 'sorcerer' | 'paladin' | 'unknown'
 
-export const matchVocation = (fullVocation: string): Vocation => {
+const matchVocation = (fullVocation: string): Vocation => {
   switch (fullVocation) {
     case 'Druid':
     case 'Elder Druid':
@@ -26,6 +26,14 @@ interface CharacterData {
   world?: string
 }
 
+export interface CharacterJSON {
+  name: string
+  vocation: string
+  fullVocation: string
+  level: number
+  world?: string
+}
+
 export class Character {
   public readonly name: string
   public readonly vocation: Vocation
@@ -39,6 +47,16 @@ export class Character {
     this.fullVocation = characterData.fullVocation
     this.level = characterData.level
     this.world = characterData.world
+  }
+
+  public toJson(): CharacterJSON {
+    return {
+      name: this.name,
+      vocation: this.vocation,
+      fullVocation: this.fullVocation,
+      level: this.level,
+      world: this.world,
+    }
   }
 
   public isRookie() {

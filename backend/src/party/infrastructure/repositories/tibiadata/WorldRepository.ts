@@ -24,7 +24,6 @@ export class WorldRepository implements WorldRepositoryInterface {
           fullVocation: entry.vocation,
           level: entry.level,
           name: entry.name,
-          world: worldName,
         }),
     )
   }

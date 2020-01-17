@@ -1,8 +1,13 @@
-import { Character } from '../domain/Character'
+import { CharacterJSON } from '../domain/Character'
 import { CharacterRepositoryInterface } from './ports/CharacterRepositoryInterface'
 import { WorldRepositoryInterface } from './ports/WorldRepositoryInterface'
 import { EnsureCharacterPolicy } from '../domain/specification/EnsureCharacterPolicy'
-import { applicationErrors } from 'src/common/applicationErrors'
+import { applicationErrors } from 'backend/src/common/applicationErrors'
+
+export interface PartyDto {
+  character: CharacterJSON
+  availableCharacters: CharacterJSON[]
+}
 
 export class PartyService {
   constructor(
@@ -12,18 +17,25 @@ export class PartyService {
 
   public async findPartyMembersForPlayer(
     playerName: string,
-  ): Promise<Character[]> {
+  ): Promise<PartyDto> {
     const character = await this.characterRepository.findOne(playerName)
     if (!character.world) {
-      throw applicationErrors.notFound('Cannot find character')
+      throw applicationErrors.notFound(`Cannot find character '${playerName}'`)
     }
 
     const loggedCharacters = await this.worldRepository.findOnlineUsers(
       character.world,
     )
     const ensureCharacterPolicy = new EnsureCharacterPolicy(character)
-    return loggedCharacters.filter((character) =>
+    const availableCharacters = loggedCharacters.filter((character) =>
       ensureCharacterPolicy.isSatisfiedBy(character),
     )
+
+    return {
+      character: character.toJson(),
+      availableCharacters: availableCharacters.map((character) =>
+        character.toJson(),
+      ),
+    }
   }
 }
