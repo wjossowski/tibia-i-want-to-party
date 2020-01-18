@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "yarn bundle",
+    "postinstall": "(cd client && yarn install) && (yarn bundle)",
     "test": "yarn jest",
     "build:backend": "yarn webpack --config ./webpack/build.backend.config.js",
     "build:backend:watch": "yarn webpack --config ./webpack/build.backend.config.js --watch",
