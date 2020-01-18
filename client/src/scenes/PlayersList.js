@@ -5,10 +5,12 @@ import { compose } from 'recompose'
 import request from '../api/request'
 import { PlayerBadge } from '../components/molecules/PlayerBadge/PlayerBadge'
 import { VocationColumn } from '../components/organisms/VocationColumn/VocationColumn'
+import { PartySelection } from '../components/organisms/PartySelection/PartySelection'
 
 const ColumnContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-content: stretch;
 `
 
 class PlayersListUnwrapped extends React.Component {
@@ -92,22 +94,35 @@ class PlayersListUnwrapped extends React.Component {
         return <h1>No active players for party :(</h1>
       }
       return (
-        <ColumnContainer>
-          {onlinePlayersByVocation.map(([vocation, players]) => {
-            return (
-              <VocationColumn title={vocation} key={vocation}>
-                {players.map((player, i) => (
-                  <PlayerBadge
-                    key={`${vocation}.${i}`}
-                    selected={this.state.selectedPlayers.includes(player)}
-                    onClick={() => this.handlePlayerSelected(player)}
-                    {...player}
-                  ></PlayerBadge>
-                ))}
-              </VocationColumn>
-            )
-          })}
-        </ColumnContainer>
+        <>
+          <PartySelection
+            selectedPlayers={this.state.selectedPlayers}
+            character={this.state.character}
+          />
+          <h2>Online players ({this.state.character.world})</h2>
+          <ColumnContainer>
+            {onlinePlayersByVocation.map(([vocation, players]) => {
+              return (
+                <VocationColumn
+                  title={vocation}
+                  isCharacterVocation={
+                    vocation === this.state.character.vocation
+                  }
+                  key={vocation}
+                >
+                  {players.map((player, i) => (
+                    <PlayerBadge
+                      key={`${vocation}.${i}`}
+                      selected={this.state.selectedPlayers.includes(player)}
+                      onClick={() => this.handlePlayerSelected(player)}
+                      {...player}
+                    ></PlayerBadge>
+                  ))}
+                </VocationColumn>
+              )
+            })}
+          </ColumnContainer>
+        </>
       )
     }
     return 'error'
