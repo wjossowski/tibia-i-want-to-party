@@ -4,7 +4,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` })
 
 const config = {
   TIBIADATA_URL: process.env.TIBIADATA_URL || 'https://api.tibiadata.com/v2',
-  REST_API_PORT: process.env.REST_API_PORT || 8080,
+  PORT: process.env.PORT || 8080,
 }
 
 export const ensureConfig = (configObj: object) => {

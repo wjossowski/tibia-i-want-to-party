@@ -39,6 +39,6 @@ app.all('/*', (_req, res) => {
 })
 
 const server = new http.Server(app)
-server.listen(config.REST_API_PORT)
+server.listen(config.PORT)
 
-console.info(`Starting server at ${config.REST_API_PORT}`)
+console.info(`Starting server at ${config.PORT}`)
