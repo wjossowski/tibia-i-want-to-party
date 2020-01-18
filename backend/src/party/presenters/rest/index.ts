@@ -7,6 +7,7 @@ import morgan from 'morgan'
 import config from '../../../common/config'
 import { apiV1 } from './controllers/v1'
 import { HttpError } from 'backend/src/common/applicationErrors'
+import { connect as connectDatabase } from '../../../common/infrastructure/repositories/postgres/client'
 
 const logger = morgan('combined')
 
@@ -38,7 +39,13 @@ app.all('/*', (_req, res) => {
   })
 })
 
-const server = new http.Server(app)
-server.listen(config.PORT)
+const startServer = async () => {
+  await connectDatabase()
 
-console.info(`Starting server at ${config.PORT}`)
+  const server = new http.Server(app)
+  server.listen(config.PORT)
+
+  console.info(`Starting server at ${config.PORT}`)
+}
+
+startServer()

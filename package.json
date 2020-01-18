@@ -10,17 +10,26 @@
     "postinstall": "(cd client && yarn install) && (yarn bundle)",
     "test": "yarn jest",
     "build:backend": "yarn webpack --config ./webpack/build.backend.config.js",
-    "build:backend:watch": "yarn webpack --config ./webpack/build.backend.config.js --watch",
+    "build:backend:dev": "yarn webpack --mode=development --config ./webpack/build.backend.config.js",
+    "build:backend:watch": "yarn webpack --mode=development --config ./webpack/build.backend.config.js --watch",
     "build:client": "(cd client && yarn build)",
     "bundle": "yarn build:backend && yarn build:client",
-    "start": "node backend_bundle.js"
+    "start": "node backend_bundle.js",
+    "postgres:start": "$(cd docker && docker-compose up -d tibia_database)",
+    "postgres:rm": "$(cd docker && docker-compose rm -f tibia_database > /dev/null)",
+    "postgres:stop": "$(cd docker && docker-compose stop tibia_database > /dev/null)",
+    "postgres:restart": "yarn postgres:stop && yarn postgres:rm && yarn postgres:start",
+    "postgres:setup": "yarn knex migrate:latest && yarn knex seed:run",
+    "knex": "./node_modules/.bin/knex --knexfile ./backend/src/common/infrastructure/repositories/postgres/knexfile.js"
   },
   "dependencies": {
     "axios": "^0.19.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "morgan": "^1.9.1"
+    "knex": "^0.20.8",
+    "morgan": "^1.9.1",
+    "pg": "^7.17.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
