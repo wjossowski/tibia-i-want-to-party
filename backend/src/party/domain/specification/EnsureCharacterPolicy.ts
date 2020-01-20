@@ -25,8 +25,8 @@ export class EnsureCharacterPolicy {
 
   private fitsInLevelRange(character: Character) {
     return (
-      character.level >= this.mainCharacter.level * 0.66 &&
-      character.level <= this.mainCharacter.level * 1.5
+      character.level >= Math.ceil((this.mainCharacter.level * 2) / 3) &&
+      character.level <= Math.ceil(this.mainCharacter.level * 1.5)
     )
   }
 
