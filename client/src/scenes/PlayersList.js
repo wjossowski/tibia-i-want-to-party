@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
+import ReactTooltip from 'react-tooltip'
 import request from '../api/request'
 import { PlayerBadge } from '../components/molecules/PlayerBadge/PlayerBadge'
 import { VocationColumn } from '../components/organisms/VocationColumn/VocationColumn'
@@ -115,6 +116,7 @@ class PlayersListUnwrapped extends React.Component {
                       key={`${vocation}.${i}`}
                       selected={this.state.selectedPlayers.includes(player)}
                       onClick={() => this.handlePlayerSelected(player)}
+                      isLookingForParty={player.isLookingForParty}
                       {...player}
                     ></PlayerBadge>
                   ))}
@@ -122,6 +124,8 @@ class PlayersListUnwrapped extends React.Component {
               )
             })}
           </ColumnContainer>
+
+          <ReactTooltip effect="solid" />
         </>
       )
     }

@@ -7,7 +7,7 @@ import morgan from 'morgan'
 import config from '../../../common/config'
 import { apiV1 } from './controllers/v1'
 import { HttpError } from 'backend/src/common/applicationErrors'
-import { connect as connectDatabase } from '../../../common/infrastructure/repositories/postgres/client'
+import { connect as connectCache } from '../../../common/infrastructure/cache/redis/client'
 
 const logger = morgan('combined')
 
@@ -40,7 +40,7 @@ app.all('/*', (_req, res) => {
 })
 
 const startServer = async () => {
-  await connectDatabase()
+  await Promise.all([connectCache()])
 
   const server = new http.Server(app)
   server.listen(config.PORT)

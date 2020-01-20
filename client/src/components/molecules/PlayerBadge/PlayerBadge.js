@@ -2,20 +2,35 @@ import React from 'react'
 import styled from 'styled-components'
 import { Breadcrumbs } from '../../atoms/Breadcrumbs/Breadcrumbs'
 import { PlayerName } from '../../atoms/PlayerName/PlayerName'
+import { Emoji } from '../../atoms/Emoji/Emoji'
 
-const Container = styled.span`
+const ColumnContainer = styled.span`
   border-bottom: 1px solid black;
   justify-content: center;
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  padding: 0.25rem;
+  min-height: 4rem;
   display: flex;
-  background-color: ${({ selected, isCharacter }) =>
-    isCharacter ? '#9A7D32' : selected ? 'green' : 'transparent'};
+  flex-direction: column;
+  background-color: ${({ selected, isCharacter, isLookingForParty }) =>
+    isCharacter
+      ? '#9A7D32'
+      : selected
+      ? 'green'
+      : isLookingForParty
+      ? 'rgba(0, 50, 0, 0.4)'
+      : 'transparent'};
   border-left: ${({ displayedInRow }) =>
     displayedInRow ? '1px solid black' : '0'};
   border-right: ${({ displayedInRow }) =>
     displayedInRow ? '1px solid black' : '0'};
   margin: ${({ displayedInRow }) => (displayedInRow ? '0.25rem' : '0')};
+`
+
+const RowContainer = styled.span`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 `
 
 const PlayerDataContainer = styled.span``
@@ -34,21 +49,30 @@ export const PlayerBadge = ({
   selected,
   displayedInRow,
   isCharacter,
+  isLookingForParty,
   ...rest
 }) => (
-  <Container
+  <ColumnContainer
     selected={selected}
     displayedInRow={displayedInRow}
     isCharacter={isCharacter}
+    isLookingForParty={isLookingForParty}
+    data-tip={
+      (isLookingForParty || null) && 'This player is looking for party!'
+    }
     {...rest}
   >
-    <PlayerDataContainer>
-      <PlayerName>{name}</PlayerName>
-      <Breadcrumbs>
-        {level} {mapVocation(fullVocation)}
-      </Breadcrumbs>
-    </PlayerDataContainer>
-  </Container>
+    <RowContainer>
+      <PlayerDataContainer>
+        <PlayerName>{name}</PlayerName>
+        <Breadcrumbs>
+          {isLookingForParty && <Emoji symbol="🏅" />}
+          {level} {mapVocation(fullVocation)}
+          {isLookingForParty && <Emoji symbol="🏅" />}
+        </Breadcrumbs>
+      </PlayerDataContainer>
+    </RowContainer>
+  </ColumnContainer>
 )
 
 PlayerBadge.defaultProps = {

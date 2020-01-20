@@ -3,16 +3,26 @@ import { CharacterRepositoryInterface } from './ports/CharacterRepositoryInterfa
 import { WorldRepositoryInterface } from './ports/WorldRepositoryInterface'
 import { EnsureCharacterPolicy } from '../domain/specification/EnsureCharacterPolicy'
 import { applicationErrors } from 'backend/src/common/applicationErrors'
+import { CharacterCacheInterface } from './ports/CharacterCacheInterface'
 
-export interface PartyDto {
+interface AvailableCharacterJson extends CharacterJSON {
+  name: string
+  vocation: string
+  fullVocation: string
+  level: number
+  isLookingForParty: boolean
+}
+
+interface PartyDto {
   character: CharacterJSON
-  availableCharacters: CharacterJSON[]
+  availableCharacters: AvailableCharacterJson[]
 }
 
 export class PartyService {
   constructor(
     private readonly characterRepository: CharacterRepositoryInterface,
     private readonly worldRepository: WorldRepositoryInterface,
+    private readonly characterCache: CharacterCacheInterface,
   ) {}
 
   public async findPartyMembersForPlayer(
@@ -31,11 +41,20 @@ export class PartyService {
       ensureCharacterPolicy.isSatisfiedBy(character),
     )
 
+    const lastSearches = await this.characterCache.findLatestCharacterNamesSearchedByWorld(
+      character.world,
+    )
+    await this.characterCache.saveLatestCharacterNameSearch(
+      character.world,
+      character.name,
+    )
+
     return {
       character: character.toJson(),
-      availableCharacters: availableCharacters.map((character) =>
-        character.toJson(),
-      ),
+      availableCharacters: availableCharacters.map((character) => ({
+        ...character.toJson(),
+        isLookingForParty: lastSearches.includes(character.name),
+      })),
     }
   }
 }
