@@ -56,12 +56,17 @@ export const PartySelection = ({
   children,
   selectedPlayers,
   character,
+  minLevel,
+  maxLevel,
 }) => (
   <Container>
     <h2>
       Your party ({calculateExpBoost(selectedPlayers, character.vocation)}% exp
       boost)
     </h2>
+    <h5>
+      Level range: ({minLevel} - {maxLevel})
+    </h5>
     <PartyMembersContainer>
       <PlayerBadge
         key={'mainCharacterContainer'}

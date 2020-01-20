@@ -18,6 +18,8 @@ class PlayersListUnwrapped extends React.Component {
   state = {
     loading: true,
     selectedPlayers: [],
+    minLevel: 0,
+    maxLevel: 100,
   }
 
   matchVocations = (players, characterLevel) => {
@@ -59,6 +61,7 @@ class PlayersListUnwrapped extends React.Component {
           onlinePlayers,
           character,
           hasData: true,
+          ...this.countLevelRanges(character),
         })
       })
       .catch((error) => {
@@ -75,9 +78,38 @@ class PlayersListUnwrapped extends React.Component {
       selectedPlayers.push(player)
     }
 
+    const levelRanges = this.countLevelRanges(
+      this.state.character,
+      selectedPlayers,
+    )
+
     this.setState({
       selectedPlayers,
+      ...levelRanges,
     })
+  }
+
+  countLevelRanges = (character, selectedPlayers = []) => {
+    const levelBandwidth = selectedPlayers.reduce(
+      (range, player) => {
+        if (player.level < range.minLevel) {
+          range.minLevel = player.level
+        }
+        if (player.level > range.maxLevel) {
+          range.maxLevel = player.level
+        }
+        return range
+      },
+      {
+        minLevel: character.level,
+        maxLevel: character.level,
+      },
+    )
+
+    return {
+      minLevel: Math.ceil((levelBandwidth.maxLevel * 2) / 3),
+      maxLevel: Math.ceil(levelBandwidth.minLevel * 1.5),
+    }
   }
 
   render() {
@@ -99,6 +131,8 @@ class PlayersListUnwrapped extends React.Component {
           <PartySelection
             selectedPlayers={this.state.selectedPlayers}
             character={this.state.character}
+            minLevel={this.state.minLevel}
+            maxLevel={this.state.maxLevel}
           />
           <h2>Online players ({this.state.character.world})</h2>
           <ColumnContainer>
@@ -111,15 +145,17 @@ class PlayersListUnwrapped extends React.Component {
                   }
                   key={vocation}
                 >
-                  {players.map((player, i) => (
-                    <PlayerBadge
-                      key={`${vocation}.${i}`}
-                      selected={this.state.selectedPlayers.includes(player)}
-                      onClick={() => this.handlePlayerSelected(player)}
-                      isLookingForParty={player.isLookingForParty}
-                      {...player}
-                    ></PlayerBadge>
-                  ))}
+                  {players
+                    .filter(this.isPlayerMatchingLevelRanges)
+                    .map((player, i) => (
+                      <PlayerBadge
+                        key={`${vocation}.${i}`}
+                        selected={this.state.selectedPlayers.includes(player)}
+                        onClick={() => this.handlePlayerSelected(player)}
+                        isLookingForParty={player.isLookingForParty}
+                        {...player}
+                      ></PlayerBadge>
+                    ))}
                 </VocationColumn>
               )
             })}
@@ -131,6 +167,9 @@ class PlayersListUnwrapped extends React.Component {
     }
     return 'error'
   }
+
+  isPlayerMatchingLevelRanges = (player) =>
+    player.level >= this.state.minLevel && player.level <= this.state.maxLevel
 }
 
 export const PlayersList = compose(withRouter)(PlayersListUnwrapped)
