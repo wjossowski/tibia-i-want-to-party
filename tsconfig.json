@@ -18,6 +18,10 @@
     "suppressImplicitAnyIndexErrors": true,
     "strict": true,
     "skipLibCheck": true,
+    "paths": {
+      "@common/*": ["backend/src/common/*"],
+      "@party/*": ["backend/src/party/*"]
+    }
   },
   "rules": {
     "curly": [true, "ignore-same-line"],

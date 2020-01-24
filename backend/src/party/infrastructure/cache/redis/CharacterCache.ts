@@ -1,6 +1,6 @@
-import { CharacterCacheInterface } from '../../../app/ports/CharacterCacheInterface'
-import { client } from '../../../../common/infrastructure/cache/redis/client'
-import config from '../../../../common/config'
+import { CharacterCacheInterface } from '@party/app/ports/CharacterCacheInterface'
+import { client } from '@common/infrastructure/cache/redis/client'
+import config from '@common/config'
 
 export class CharacterCache implements CharacterCacheInterface {
   private readonly prefix = 'party:lastsearches'

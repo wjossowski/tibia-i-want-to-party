@@ -1,6 +1,6 @@
-import { Character } from '../../../domain/Character'
-import root from '../../../presenters/rest/root'
-import { CharacterRepositoryInterface } from '../../../app/ports/CharacterRepositoryInterface'
+import { Character } from '@party/domain/Character'
+import root from '@party/presenters/rest/root'
+import { CharacterRepositoryInterface } from '@party/app/ports/CharacterRepositoryInterface'
 
 interface CharacterEntry {
   level: number

@@ -4,10 +4,10 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 
-import config from '../../../common/config'
+import config from '@common/config'
 import { apiV1 } from './controllers/v1'
-import { HttpError } from 'backend/src/common/applicationErrors'
-import { connect as connectCache } from '../../../common/infrastructure/cache/redis/client'
+import { HttpError } from '@common/applicationErrors'
+import { connect as connectCache } from '@common/infrastructure/cache/redis/client'
 
 const logger = morgan('combined')
 
