@@ -1,5 +1,5 @@
 import redis from 'ioredis'
-import config from '../../../config'
+import config from '@common/config'
 
 export let client: redis.Redis
 

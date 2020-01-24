@@ -6,11 +6,11 @@ module.exports = {
   externals: [nodeExternals()],
   entry: path.resolve(
     __dirname,
-    '../backend/src/party/presenters/rest/index.ts',
+    '../../backend/src/party/presenters/rest/index.ts',
   ),
   output: {
     filename: 'backend_bundle.js',
-    path: path.resolve(__dirname, '../'),
+    path: path.resolve(__dirname, '../../'),
   },
   mode: 'production',
   optimization: {

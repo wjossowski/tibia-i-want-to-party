@@ -12,10 +12,6 @@ const config = {
   PARTY_SEARCH_TIMEOUT: process.env.PARTY_SEARCH_TIMEOUT || 3600,
 }
 
-if (process.env.NODE_ENV === 'production') {
-  config['POSTGRES_DATABASE_URL'] = process.env.POSTGRES_DATABASE_URL
-}
-
 export const ensureConfig = (configObj: object) => {
   Object.entries(configObj).forEach(([key, value]) => {
     if (value === '' || value === undefined) {

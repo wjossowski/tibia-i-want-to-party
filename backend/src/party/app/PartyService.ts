@@ -1,8 +1,8 @@
+import { applicationErrors } from '@common/applicationErrors'
 import { CharacterJSON } from '../domain/Character'
 import { CharacterRepositoryInterface } from './ports/CharacterRepositoryInterface'
 import { WorldRepositoryInterface } from './ports/WorldRepositoryInterface'
 import { EnsureCharacterPolicy } from '../domain/specification/EnsureCharacterPolicy'
-import { applicationErrors } from 'backend/src/common/applicationErrors'
 import { CharacterCacheInterface } from './ports/CharacterCacheInterface'
 
 interface AvailableCharacterJson extends CharacterJSON {
