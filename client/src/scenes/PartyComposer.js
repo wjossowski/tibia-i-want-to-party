@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import ReactTooltip from 'react-tooltip'
@@ -96,6 +97,14 @@ class PartyComposerUnwrapped extends React.Component {
     }
     return 'error'
   }
+}
+
+PartyComposerUnwrapped.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      characterName: PropTypes.string,
+    }),
+  }),
 }
 
 export const PartyComposer = compose(withRouter)(PartyComposerUnwrapped)

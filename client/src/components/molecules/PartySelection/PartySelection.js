@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { PlayerBadge } from '../PlayerBadge/PlayerBadge'
@@ -64,3 +65,19 @@ export const PartySelection = ({
     </Breadcrumbs>
   </Container>
 )
+
+PartySelection.propTypes = {
+  title: PropTypes.string.isRequired,
+  selectedPlayers: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      vocation: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  character: PropTypes.shape({
+    vocation: PropTypes.string.isRequired,
+  }).isRequired,
+  minLevel: PropTypes.number.isRequired,
+  maxLevel: PropTypes.number.isRequired,
+  children: PropTypes.array.isRequired,
+}

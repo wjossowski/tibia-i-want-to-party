@@ -1,12 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export const Emoji = (props) => (
-  <span
-    className="emoji"
-    role="img"
-    aria-label={props.label ? props.label : ''}
-    aria-hidden={props.label ? 'false' : 'true'}
-  >
-    {props.symbol}
+export const Emoji = ({ label, symbol }) => (
+  <span className="emoji" role="img" aria-label={label} aria-hidden={!!label}>
+    {symbol}
   </span>
 )
+
+Emoji.defaultProps = {
+  label: '',
+  symbol: null,
+}
+
+Emoji.propTypes = {
+  label: PropTypes.string,
+  symbol: PropTypes.string,
+}

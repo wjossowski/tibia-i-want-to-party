@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -17,9 +18,14 @@ const Title = styled.div`
 const adjustTitleText = ([firstLetter, ...rest]) =>
   [firstLetter.toUpperCase(), ...rest, 's'].join('')
 
-export const VocationColumn = ({ title, children, isCharacterVocation }) => (
+export const VocationColumn = ({ title, isCharacterVocation, children }) => (
   <Container isCharacterVocation={isCharacterVocation}>
     <Title>{adjustTitleText(title)}</Title>
     {children}
   </Container>
 )
+
+VocationColumn.propTypes = {
+  title: PropTypes.string.isRequired,
+  isCharacterVocation: PropTypes.bool.isRequired,
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Breadcrumbs } from '../../atoms/Breadcrumbs/Breadcrumbs'
 import { PlayerName } from '../../atoms/PlayerName/PlayerName'
@@ -77,4 +78,15 @@ export const PlayerBadge = ({
 
 PlayerBadge.defaultProps = {
   selected: false,
+  isLookingForParty: false,
+}
+
+PlayerBadge.propTypes = {
+  name: PropTypes.string.isRequired,
+  fullVocation: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  selected: PropTypes.bool.isRequired,
+  displayedInRow: PropTypes.bool.isRequired,
+  isCharacter: PropTypes.bool.isRequired,
+  isLookingForParty: PropTypes.bool.isRequired,
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'recompose'
 import { Input } from '../components/atoms/Input/Input'
@@ -28,6 +29,10 @@ class OnboardingUnwrapped extends React.Component {
       </form>
     )
   }
+}
+
+OnboardingUnwrapped.propTypes = {
+  history: PropTypes.shape({ push: PropTypes.func }),
 }
 
 export const Onboarding = compose(withRouter)(OnboardingUnwrapped)

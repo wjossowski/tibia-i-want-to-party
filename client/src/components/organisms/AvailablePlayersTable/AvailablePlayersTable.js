@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { VocationColumn } from '../../molecules/VocationColumn/VocationColumn'
 import { PlayerBadge } from '../../molecules/PlayerBadge/PlayerBadge'
 import { isPlayerMatchingLevelRanges } from '../../../util/levelRanges'
@@ -13,7 +14,6 @@ const ColumnContainer = styled.div`
 export const AvailablePlayersTable = ({
   onlinePlayersByVocation,
   characterVocation,
-  selectedPlayers,
   handlePlayerSelected,
   isPlayerSelected,
   minLevel,
@@ -50,4 +50,17 @@ export const AvailablePlayersTable = ({
       </ColumnContainer>
     </>
   )
+}
+
+AvailablePlayersTable.propTypes = {
+  onlinePlayersByVocation: PropTypes.objectOf({
+    level: PropTypes.number.isRequired,
+    isLookingForParty: PropTypes.bool.isRequired,
+  }).isRequired,
+  characterVocation: PropTypes.string.isRequired,
+  handlePlayerSelected: PropTypes.func.isRequired,
+  isPlayerSelected: PropTypes.func.isRequired,
+  minLevel: PropTypes.number.isRequired,
+  maxLevel: PropTypes.number.isRequired,
+  world: PropTypes.string.isRequired,
 }
