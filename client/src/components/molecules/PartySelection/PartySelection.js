@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NotificationManager } from 'react-notifications'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { PlayerBadge } from '../../molecules/PlayerBadge/PlayerBadge'
+import { PlayerBadge } from '../PlayerBadge/PlayerBadge'
 import { Breadcrumbs } from '../../atoms/Breadcrumbs/Breadcrumbs'
+
+import { calculateExpBoost } from '../../../util/experience'
+import { playerNameCopiedNotification } from '../../../notifications/notifications'
 
 const Container = styled.div`
   width: 80%;
@@ -19,45 +21,13 @@ const PartyMembersContainer = styled.div`
   spacing: 1rem;
 `
 
-const playerNameCopied = (name) => {
-  NotificationManager.success(`${name} copied!`)
-}
-
-const calculateExpBoost = (selectedPlayers, characterVocation) => {
-  const vocations = selectedPlayers.reduce(
-    (vocations, { vocation }) => {
-      if (!vocations.includes(vocation)) {
-        vocations.push(vocation)
-      }
-      return vocations
-    },
-    [characterVocation],
-  )
-
-  if (selectedPlayers.length === 0) {
-    return 0
-  }
-
-  switch (vocations.length) {
-    case 1:
-      return 20
-    case 2:
-      return 30
-    case 3:
-      return 60
-    case 4:
-    default:
-      return 100
-  }
-}
-
 export const PartySelection = ({
   title,
-  children,
   selectedPlayers,
   character,
   minLevel,
   maxLevel,
+  children,
 }) => (
   <Container>
     <h2>
@@ -76,7 +46,11 @@ export const PartySelection = ({
         {...character}
       />
       {selectedPlayers.map((player, i) => (
-        <CopyToClipboard text={player.name} onCopy={playerNameCopied} key={i}>
+        <CopyToClipboard
+          text={player.name}
+          onCopy={playerNameCopiedNotification}
+          key={i}
+        >
           <PlayerBadge
             selected={true}
             displayedInRow={true}

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Onboarding } from '../scenes/Onboarding'
-import { PlayersList } from '../scenes/PlayersList'
+import { PartyComposer } from '../scenes/PartyComposer'
 import { paths } from './paths'
 
 import { Router as ReactRouter, Route, Switch } from 'react-router-dom'
@@ -14,7 +14,7 @@ export const Router = () => (
       <Route
         exact
         path={`${paths.party}/:characterName`}
-        component={PlayersList}
+        component={PartyComposer}
       />
       <Route component={Onboarding} />
     </Switch>
