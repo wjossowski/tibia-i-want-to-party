@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 import { VocationColumn } from '../../molecules/VocationColumn/VocationColumn'
 import { PlayerBadge } from '../../molecules/PlayerBadge/PlayerBadge'
 import { isPlayerMatchingLevelRanges } from '../../../util/levelRanges'
@@ -19,44 +20,45 @@ export const AvailablePlayersTable = ({
   minLevel,
   maxLevel,
   world,
-}) => {
-  return (
-    <>
-      <h2>Online players ({world})</h2>
-      <ColumnContainer>
-        {onlinePlayersByVocation.map(([vocation, players]) => {
-          return (
-            <VocationColumn
-              title={vocation}
-              isCharacterVocation={vocation === characterVocation}
-              key={vocation}
-            >
-              {players
-                .filter((player) =>
-                  isPlayerMatchingLevelRanges(player, minLevel, maxLevel),
-                )
-                .map((player, i) => (
-                  <PlayerBadge
-                    key={`${vocation}.${i}`}
-                    selected={isPlayerSelected(player)}
-                    onClick={() => handlePlayerSelected(player)}
-                    isLookingForParty={player.isLookingForParty}
-                    {...player}
-                  ></PlayerBadge>
-                ))}
-            </VocationColumn>
-          )
-        })}
-      </ColumnContainer>
-    </>
-  )
+}) => (
+  <>
+    <h2>
+      <FormattedMessage id="party.composer.table.title" values={{ world }} />
+    </h2>
+    <ColumnContainer>
+      {onlinePlayersByVocation.map(([vocation, players]) => {
+        return (
+          <VocationColumn
+            title={vocation}
+            isCharacterVocation={vocation === characterVocation}
+            key={vocation}
+          >
+            {players
+              .filter((player) =>
+                isPlayerMatchingLevelRanges(player, minLevel, maxLevel),
+              )
+              .map((player, i) => (
+                <PlayerBadge
+                  key={`${vocation}.${i}`}
+                  selected={isPlayerSelected(player)}
+                  onClick={() => handlePlayerSelected(player)}
+                  isLookingForParty={player.isLookingForParty}
+                  {...player}
+                ></PlayerBadge>
+              ))}
+          </VocationColumn>
+        )
+      })}
+    </ColumnContainer>
+  </>
+)
+
+AvailablePlayersTable.defaultProps = {
+  onlinePlayersByVocation: [],
 }
 
 AvailablePlayersTable.propTypes = {
-  onlinePlayersByVocation: PropTypes.objectOf({
-    level: PropTypes.number.isRequired,
-    isLookingForParty: PropTypes.bool.isRequired,
-  }).isRequired,
+  onlinePlayersByVocation: PropTypes.array.isRequired,
   characterVocation: PropTypes.string.isRequired,
   handlePlayerSelected: PropTypes.func.isRequired,
   isPlayerSelected: PropTypes.func.isRequired,

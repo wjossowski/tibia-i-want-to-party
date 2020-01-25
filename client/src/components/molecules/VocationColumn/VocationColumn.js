@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
 
 const Container = styled.div`
   border: 1px solid black;
@@ -15,12 +16,11 @@ const Title = styled.div`
   padding: 0.5em;
 `
 
-const adjustTitleText = ([firstLetter, ...rest]) =>
-  [firstLetter.toUpperCase(), ...rest, 's'].join('')
-
 export const VocationColumn = ({ title, isCharacterVocation, children }) => (
   <Container isCharacterVocation={isCharacterVocation}>
-    <Title>{adjustTitleText(title)}</Title>
+    <Title>
+      <FormattedMessage id={`party.composer.table.header.${title}`} />
+    </Title>
     {children}
   </Container>
 )
