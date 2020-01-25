@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { useIntl } from 'react-intl'
 import { Breadcrumbs } from '../../atoms/Breadcrumbs/Breadcrumbs'
 import { PlayerName } from '../../atoms/PlayerName/PlayerName'
 import { Emoji } from '../../atoms/Emoji/Emoji'
@@ -52,33 +53,39 @@ export const PlayerBadge = ({
   isCharacter,
   isLookingForParty,
   ...rest
-}) => (
-  <ColumnContainer
-    selected={selected}
-    displayedInRow={displayedInRow}
-    isCharacter={isCharacter}
-    isLookingForParty={isLookingForParty}
-    data-tip={
-      (isLookingForParty || null) && 'This player is looking for party!'
-    }
-    {...rest}
-  >
-    <RowContainer>
-      <PlayerDataContainer>
-        <PlayerName>{name}</PlayerName>
-        <Breadcrumbs>
-          {isLookingForParty && <Emoji symbol="🏅" />}
-          {level} {mapVocation(fullVocation)}
-          {isLookingForParty && <Emoji symbol="🏅" />}
-        </Breadcrumbs>
-      </PlayerDataContainer>
-    </RowContainer>
-  </ColumnContainer>
-)
+}) => {
+  const intl = useIntl()
+  return (
+    <ColumnContainer
+      selected={selected}
+      displayedInRow={displayedInRow}
+      isCharacter={isCharacter}
+      isLookingForParty={isLookingForParty}
+      data-tip={
+        (isLookingForParty || null) &&
+        intl.formatMessage({ id: 'party.composer.table.lookingForParty.popup' })
+      }
+      {...rest}
+    >
+      <RowContainer>
+        <PlayerDataContainer>
+          <PlayerName>{name}</PlayerName>
+          <Breadcrumbs>
+            {isLookingForParty && <Emoji symbol="🏅" />}
+            {level} {mapVocation(fullVocation)}
+            {isLookingForParty && <Emoji symbol="🏅" />}
+          </Breadcrumbs>
+        </PlayerDataContainer>
+      </RowContainer>
+    </ColumnContainer>
+  )
+}
 
 PlayerBadge.defaultProps = {
   selected: false,
   isLookingForParty: false,
+  isCharacter: false,
+  displayedInRow: false,
 }
 
 PlayerBadge.propTypes = {

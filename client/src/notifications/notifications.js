@@ -1,5 +1,5 @@
 import { NotificationManager } from 'react-notifications'
 
-export const playerNameCopiedNotification = (name) => {
-  NotificationManager.success(`${name} copied!`)
+export const success = (message) => {
+  NotificationManager.success(message)
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 import { compose } from 'recompose'
 import ReactTooltip from 'react-tooltip'
 import request from '../api/request'
 import { AvailablePlayersTable } from '../components/organisms/AvailablePlayersTable/AvailablePlayersTable'
 import { PartySelection } from '../components/molecules/PartySelection/PartySelection'
-
 import { matchVocations } from '../util/vocations'
 import { countLevelRanges } from '../util/levelRanges'
 
@@ -61,7 +61,11 @@ class PartyComposerUnwrapped extends React.Component {
 
   render() {
     if (this.state.loading) {
-      return <h1>Loading...</h1>
+      return (
+        <h1>
+          <FormattedMessage id="party.composer.loading" />
+        </h1>
+      )
     }
     if (this.state.error) {
       return <h1>{this.state.error.message}</h1>
@@ -71,7 +75,11 @@ class PartyComposerUnwrapped extends React.Component {
         this.state.onlinePlayers,
       ).sort()
       if (onlinePlayersByVocation.length === 0) {
-        return <h1>No active players for party :(</h1>
+        return (
+          <h1>
+            <FormattedMessage id="party.composer.noActivePlayers" />
+          </h1>
+        )
       }
       return (
         <>
@@ -90,7 +98,6 @@ class PartyComposerUnwrapped extends React.Component {
             isPlayerSelected={this.isPlayerSelected}
             world={this.state.character.world}
           />
-
           <ReactTooltip effect="solid" />
         </>
       )
