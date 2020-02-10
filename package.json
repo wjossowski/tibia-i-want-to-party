@@ -1,7 +1,7 @@
 {
   "name": "i-want-to-party",
   "version": "1.0.0",
-  "description": "Tibia party seeker",
+  "description": "TibiaTools",
   "main": "index.js",
   "author": "Wojciech Ossowski",
   "license": "MIT",

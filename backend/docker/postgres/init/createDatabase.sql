@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS tibia_party_seeker;
-CREATE DATABASE tibia_party_seeker;
+DROP DATABASE IF EXISTS tibia_tools;
+CREATE DATABASE tibia_tools;

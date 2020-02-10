@@ -6,7 +6,7 @@ module.exports = {
       port: 54321,
       user: 'postgres',
       password: 'postgres',
-      database: 'tibia_party_seeker',
+      database: 'tibia_tools',
     },
   },
   production: { client: 'pg', connection: process.env.POSTGRES_DATABASE_URL },
