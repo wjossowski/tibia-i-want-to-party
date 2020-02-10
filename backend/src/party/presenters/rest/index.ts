@@ -4,6 +4,7 @@ import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
 import sslRedirect from 'heroku-ssl-redirect'
+import helmet from 'helmet'
 
 import config from '@common/config'
 import { apiV1 } from './controllers/v1'
@@ -15,6 +16,7 @@ const logger = morgan('combined')
 const app = express()
 app.use(logger)
 app.use(cors())
+app.use(helmet())
 app.use(sslRedirect())
 
 app.use(express.static(path.join(__dirname, './client/build')))
